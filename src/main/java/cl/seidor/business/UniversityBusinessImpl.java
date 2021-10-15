@@ -6,17 +6,14 @@ import cl.seidor.entities.external.response.Universities;
 import cl.seidor.repositories.UniversityRepository;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-@Setter
 public class UniversityBusinessImpl implements UniversityBusiness {
 
     private static final String OK = "OK";
@@ -31,16 +28,15 @@ public class UniversityBusinessImpl implements UniversityBusiness {
 
     @Override
     public String insertCar(String universityName) {
-        ResponseEntity<List<Universities>> response = restTemplate.exchange(
-                universitiesUrl,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<Universities>>(){});
-                if(Optional.ofNullable(universityRepository.findByName(universityName)).isPresent()) return NOK;
-                response.getBody().stream()
-                .filter(universityFilter(universityName))
-                .forEach(saveUniversities());
+        ResponseEntity<Universities[]> universitiesResponse = restTemplate.getForEntity(universitiesUrl, Universities[].class);
+        if (Optional.ofNullable(universityRepository.findByName(universityName)).isPresent()) return NOK;
+        Arrays.asList(universitiesResponse.getBody()).stream().filter(universityFilter(universityName)).forEach(saveUniversities());
         return OK;
+    }
+
+    @Override
+    public String setUniversitiesUrl(String universitiesUrl) {
+        return this.universitiesUrl = universitiesUrl;
     }
 
     private Consumer<Universities> saveUniversities() {

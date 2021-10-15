@@ -26,7 +26,7 @@ public class AppConfigurator {
 
     @Bean
     public UniversityBusiness getCarBusiness() {
-        UniversityBusinessImpl carBusiness = new UniversityBusinessImpl();
+        UniversityBusiness carBusiness = new UniversityBusinessImpl();
         carBusiness.setUniversitiesUrl(universitiesUrl);
         return carBusiness;
     }
