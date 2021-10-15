@@ -6,8 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import cl.seidor.configurations.CarConfigurationTest;
-import cl.seidor.controllers.entities.request.InsertCar;
+import cl.seidor.configurators.UniversityConfigurationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.Test;
@@ -17,9 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-@ContextConfiguration(classes = { CarConfigurationTest.class })
-@WebMvcTest(controllers = CarsController.class)
-public class CarControllerTest {
+@ContextConfiguration(classes = { UniversityConfigurationTest.class })
+@WebMvcTest(controllers = UniversityController.class)
+public class UniversityControllerTest {
 
     @Autowired
     MockMvc mvc;
@@ -28,18 +27,17 @@ public class CarControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void insertCar() throws Exception {
-        this.mvc.perform(post("/insertcar")
-                .content(objectMapper.writeValueAsString(getBuild()))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("OK")));
+    public void insertCar()  {
+        try {
+            this.mvc.perform(post("/insertuniversities")
+                    //content(objectMapper.writeValueAsString(getBuild()))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().json("{'counter': 1}"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
-
-    private InsertCar getBuild() {
-        return InsertCar.builder().mark("").model("").age(1).build();
-    }
-
 
 }
