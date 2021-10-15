@@ -16,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-@ContextConfiguration(classes = { UniversityConfigurationTest.class })
+@ContextConfiguration(classes = {UniversityConfigurationTest.class})
 @WebMvcTest(controllers = UniversityController.class)
 public class UniversityControllerTest {
 
@@ -27,17 +27,12 @@ public class UniversityControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void insertCar()  {
-        try {
-            this.mvc.perform(post("/insertuniversities")
-                    //content(objectMapper.writeValueAsString(getBuild()))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andExpect(content().json("{'counter': 1}"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public void insertCar() throws Exception {
+        this.mvc.perform(post("/insertuniversities")
+                //content(objectMapper.writeValueAsString(getBuild()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{'counter': 1}"));
     }
 
 }
