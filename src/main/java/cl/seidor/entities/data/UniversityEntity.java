@@ -1,16 +1,18 @@
 package cl.seidor.entities.data;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "universities")
 @Builder
 @ToString
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UniversityEntity {
+
+
 
     @Id
     @Column
