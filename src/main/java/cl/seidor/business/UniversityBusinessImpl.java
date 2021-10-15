@@ -4,7 +4,6 @@ package cl.seidor.business;
 import cl.seidor.entities.data.UniversityEntity;
 import cl.seidor.entities.external.response.Universities;
 import cl.seidor.repositories.UniversityRepository;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
