@@ -45,6 +45,14 @@ public class UniversityBusinessTest {
         assertEquals(universityBusiness.insertCar(FLORIDA_POLYTECHNIC_UNIVERSITY), OK);
     }
 
+    @Test
+    public void insertCarNOK() {
+        universityBusiness.setUniversitiesUrl(NOTHING);
+        when(restTemplate.getForEntity(any(String.class), any(Class.class))).thenReturn(getUniversities());
+        when(universityRepository.findByName(any(String.class))).thenReturn(createUniversityEntity());
+        assertEquals(universityBusiness.insertCar(FLORIDA_POLYTECHNIC_UNIVERSITY), "NOK");
+    }
+
     private UniversityEntity createUniversityEntity() {
         return UniversityEntity.builder().alphaTwoCode(US).country(UNITED_STATES).name(FLORIDA_POLYTECHNIC_UNIVERSITY).build();
     }
